@@ -745,7 +745,13 @@ endnight - Stop Salty Teemo Night & Reset Bets`);
 
             });
             return;
-
+        case "patchnotes":
+            var patchspl=patch.split(".");
+            var embed=new Discord.RichEmbed()
+                .setTitle("Patch Notes for "+patch)
+                .setDescription("[Click Here](https://na.leagueoflegends.com/en/news/game-updates/patch/patch-"+patchspl[0]+patchspl[1]+"-notes)")
+                .setColor(set.defaultcolor);
+            return message.channel.send(embed);
     }
 });
 
