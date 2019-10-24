@@ -1,0 +1,16 @@
+{
+    "prefix": ">",
+    "token": "NjMzNDQwMTMyNzcwNDMwOTg2.XaT_Rw.0BMFHhocQxiimaIhSKd-B0O7sRY",
+    "adminroles": [
+        "Officer"
+    ],
+    "adminids": [
+        "123897887666077696",
+        "182964083266420736"
+    ],
+    "startingamount": 500,
+    "defaultcolor": "#a06df2",
+    "daily": 500,
+    "randomreward": 250,
+    "maxgive": 10000
+}
