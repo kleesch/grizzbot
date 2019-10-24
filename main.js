@@ -748,10 +748,17 @@ endnight - Stop Salty Teemo Night & Reset Bets`);
         case "patchnotes":
             var patchspl=patch.split(".");
             var embed=new Discord.RichEmbed()
-                .setTitle("Patch Notes for "+patch)
+                .setTitle("Patch Notes for "+patchspl[0]+"."+patchspl[1])
                 .setDescription("[Click Here](https://na.leagueoflegends.com/en/news/game-updates/patch/patch-"+patchspl[0]+patchspl[1]+"-notes)")
                 .setColor(set.defaultcolor);
             return message.channel.send(embed);
+        case "flip":
+            var txt=(Math.random()<=.5) ? "Heads" : "Tails";
+            var embed=new Discord.RichEmbed()
+                .setTitle("Coin Flip")
+                .setDescription(txt)
+                .setColor(set.defaultcolor);
+            return message.reply(embed);
     }
 });
 
