@@ -151,7 +151,6 @@ async function exper(id, amt, force) {
     if (exp_curve(exp[id]["lvl"] + 1) <= (exp[id]["raw"] - sum)) {
         //exp[id]["raw"] = 0;
         exp[id]["lvl"]++;
-        updateChamps();
         await store.updateItem('exp', exp);
         return true;
     }
@@ -164,6 +163,7 @@ const filter = (reaction, user) => {
     return ['💸'].includes(reaction.emoji.name);
 };
 async function randomDrop(channel) {
+    updateChamps();// this is the least frequent way to call httpupdate
     var embed = new Discord.RichEmbed()
         .setTitle("Cash Giveaway!")
         .setDescription("React to this message for cash!")
