@@ -185,6 +185,28 @@ async function randomDrop(channel) {
     });
 }
 
+//Blackjack manager
+var blackjack = {} //[id]=[pcamt,pcstay,useramt,userbet,userdisplayname]
+function riskAssess(amt) {//This is the mathematical function to determine if the computer should hit or stay.
+    return .1 * (-amt - 10) + 2; //can be negative. if negative, safe to bet
+}
+
+function getBJEmbed(id) {
+    var embed = new Discord.RichEmbed()
+        .setTitle("Blackjack with " + blackjack[id][4])
+        .setDescription("Your Amount: " + blackjack[id][2])
+        .setColor(set.defaultcolor);
+    return embed;
+}
+
+function getBJEmbedFinal(id) {
+    var embed = new Discord.RichEmbed()
+        .setTitle("Blackjack with " + blackjack[id][4])
+        .setDescription("Dealer: " + blackjack[id][0] + "\n\nYou: " + blackjack[id][2])
+        .setColor(set.defaultcolor);
+    return embed;
+}
+
 client.on("ready", () => {
     console.log("Salty Teemo Bot Started");
     client.user.setActivity('Challenger Replays', { type: 'WATCHING' })
@@ -722,19 +744,83 @@ endnight - Stop Salty Teemo Night & Reset Bets`);
             });
             return;
         case "patchnotes":
-            var patchspl=patch.split(".");
-            var embed=new Discord.RichEmbed()
-                .setTitle("Patch Notes for "+patchspl[0]+"."+patchspl[1])
-                .setDescription("[Click Here](https://na.leagueoflegends.com/en/news/game-updates/patch/patch-"+patchspl[0]+patchspl[1]+"-notes)")
+            var patchspl = patch.split(".");
+            var embed = new Discord.RichEmbed()
+                .setTitle("Patch Notes for " + patchspl[0] + "." + patchspl[1])
+                .setDescription("[Click Here](https://na.leagueoflegends.com/en/news/game-updates/patch/patch-" + patchspl[0] + patchspl[1] + "-notes)")
                 .setColor(set.defaultcolor);
             return message.channel.send(embed);
         case "flip":
-            var txt=(Math.random()<=.5) ? "Heads" : "Tails";
-            var embed=new Discord.RichEmbed()
+            var txt = (Math.random() <= .5) ? "Heads" : "Tails";
+            var embed = new Discord.RichEmbed()
                 .setTitle("Coin Flip")
                 .setDescription(txt)
                 .setColor(set.defaultcolor);
             return message.reply(embed);
+        case "blackjack": //args=[amt]
+            if (blackjack.hasOwnProperty(message.author.id))
+                return message.reply("You already have an ongoing game!");
+            if (!(args.length == 1))
+                return message.reply("Invalid bet!");
+            if (isNaN(args[0]))
+                return message.reply("Invalid bet!");
+            var bet = parseInt(args[0]);
+            if (temptotals[message.author.id] < bet)
+                return message.reply("You don't have enough to make that bet!");
+            if (bet <= 0)
+                return message.reply("Invalid bet!");
+            awardCash(message.author.id, -1 * bet);
+            blackjack[message.author.id] = [Math.floor(Math.random() * 10) + 1, false, Math.floor(Math.random() * 10) + 1, bet, message.member.displayName];
+            return message.channel.send(getBJEmbed(message.author.id));
+        case "hit"://[id]=[pcamt,pcstay,useramt,userbet,userdisplayname]
+            var id = message.author.id;
+            if (!blackjack.hasOwnProperty(id))
+                return message.reply("You don't have an active blackjack bet!");
+            blackjack[id][2] += Math.floor(Math.random() * 10) + 1; //random betweeen 1 and 10
+            if (blackjack[id][2] > 21) {
+                var embed = getBJEmbedFinal(id)
+                embed.addField("Bust!", "You lost!");
+                delete blackjack[id];
+                return message.channel.send(embed);
+
+            }
+            return message.channel.send(getBJEmbed(id));
+        case "stay":
+            var id = message.author.id;
+            if (!blackjack.hasOwnProperty(id))
+                return message.reply("You don't have an active blackjack bet!");
+            while (!blackjack[id][1]) {
+                if (riskAssess(21 - blackjack[id][0]) > Math.random() && blackjack[id][0] > 17) { //Too risky! Also dealer must bet to 17.
+                    blackjack[id][1] = true;
+                } else {
+                    blackjack[id][0] += Math.floor(Math.random() * 10) + 1;
+                    if (blackjack[id][0] > 21) {
+                        var embed = getBJEmbedFinal(id)
+                        embed.addField("Dealer Bust!", "You won!");
+                        awardCash(id, blackjack[id][3] * 2);
+                        delete blackjack[id];
+                        return message.channel.send(embed);
+                    }
+                }
+            }
+            if (blackjack[id][0] > blackjack[id][2]) {
+                var embed = getBJEmbedFinal(id);
+                embed.addField("You lost!", "Better luck next time.");
+                delete blackjack[id];
+                return message.channel.send(embed);
+            } else if (blackjack[id][0] < blackjack[id][2]) {
+                var embed = getBJEmbedFinal(id);
+                embed.addField("You won!", "Congrats");
+                awardCash(id, blackjack[id][3] * 2);
+                delete blackjack[id];
+                return message.channel.send(embed);
+            } else {
+                var embed = getBJEmbedFinal(id);
+                embed.addField("Push!");
+                awardCash(id, blackjack[id][3]);
+                delete blackjack[id];
+                return message.channel.send(embed);
+            }
     }
 });
 
