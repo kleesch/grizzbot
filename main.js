@@ -57,20 +57,6 @@ async function getExp() {
 
 var blue = {}; //blue[id]=bet
 var red = {}; //red[id]=bet
-/*
-var exp = {
-   "355132208995893248": {
-       "lvl": 1,
-       "raw": 48,
-       "cd": new Date(2000),
-   },
- 
-   "456277934748074005": {
-       "lvl": 0,
-       "raw": 22,
-       "cd": new Date(2000),
-   },
-};*/
 
 const req = require("request-promise");
 var champs = []
@@ -225,7 +211,6 @@ client.on("message", async (message) => {
         store.updateItem('totals', temptotals);
         message.reply("Your profile has been created with " + set.startingamount);
     }
-    //if (active && message.channel.type=="text" && message.channel!=chan) return;
 
     switch (command) {
         case "startnight":
@@ -259,7 +244,6 @@ client.on("message", async (message) => {
                     return message.reply("Bet too large.");
                 blue[message.author.id] = bet;
                 awardCash(message.author.id, -1 * bet);
-                //console.log("Set bet for " + message.author.id + " for " + args[0]);
                 return message.reply("Bet set for " + args[0] + " on blue!");
             };
         case "red":
@@ -280,7 +264,6 @@ client.on("message", async (message) => {
                 red[message.author.id] = bet;
                 temptotals[message.author.id] -= bet;
                 store.updateItem('totals', temptotals);
-                //console.log("Set bet for " + message.author.id + " for " + args[0]);
                 return message.reply("Bet set for " + args[0] + " on red!");
             };
         case "profile":
@@ -292,7 +275,6 @@ client.on("message", async (message) => {
                 for (var i = 0; i <= exp[message.author.id]["lvl"]; i++) {
                     sum += exp_curve(i);
                 }
-                //console.log(exp[message.author.id]["raw"] - sum);
                 for (var i = 1; i <= 10; i++) {
                     if ((exp[message.author.id]["raw"] - sum) / nxt > (i / 10))
                         loadbar += "▰";
@@ -399,8 +381,6 @@ client.on("message", async (message) => {
         case "give":
             if (!isAdmin(message.member))
                 return message.reply("Only an admin can do that!");
-            //if (message.author.id == "134456652387581953") // Stop logan
-            //    return message.reply("You aren't allowed to give currency.");
             if (isNaN(args[1]))
                 return message.reply("Invalid Amount");
             if (!(message.mentions.members.first().id in temptotals)) {
@@ -418,7 +398,6 @@ client.on("message", async (message) => {
                 return message.reply("You cannot use this here!");
             var str = "";
             var sorted = sortBets(temptotals);
-            //console.log(sorted);
             for (var i = 0; i < sorted.length && i < 25; i++) {
                 var b = sorted[i][0];
                 const user = await client.fetchUser(b);
@@ -588,7 +567,6 @@ endnight - Stop Salty Teemo Night & Reset Bets`);
                 .setDescription(question + "\n\n" + ostr)
                 .setColor(set.defaultcolor)
                 .setFooter("Started by " + message.member.displayName);
-            //next=send message and .then(React)
             message.channel.send(embed).then(async (smsg) => {
                 var emote_table = ["🇦", "🇧", "🇨", "🇩", "🇪", "🇫"]
                 for (var i = 0; i < options.length; i++)
@@ -640,7 +618,6 @@ endnight - Stop Salty Teemo Night & Reset Bets`);
                         await msg.clearReactions();
                     })
                     .catch(async collected => {
-                        //await awardCash(message.author.id,bet); I disabled giving your cash back as it's abusable.
                         embed.setDescription("You took too long!");
                         await msg.edit(embed);
                         await msg.clearReactions();
@@ -737,7 +714,6 @@ endnight - Stop Salty Teemo Night & Reset Bets`);
                         }
                     })
                     .catch(async collected => {
-                        //await awardCash(message.author.id,bet); I disabled giving your cash back as it's abusable.
                         embed.setDescription("Error!");
                         await msg.edit(embed);
                         await msg.clearReactions();
