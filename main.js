@@ -65,9 +65,7 @@ async function getExp() {
 }
 
 global.blue = {}; //blue[id]=bet
-module.exports.blue=blue;
 global.red = {}; //red[id]=bet
-module.exports.red=red;
 
 function clearBets(){
     global.red={};
@@ -237,18 +235,22 @@ module.exports.getBJEmbedFinal=getBJEmbedFinal;
 
 //Command Setup
 var commands = {};
-var helpReg = "";
-var helpAdmin = "";
+var helpRegDesc = "";
+var helpRegCommands=""
+var helpAdminDesc = "";
+var helpAdminCommands=""
 function indexCommands() {
     var dir = getDir('./commands');
     for (var com in dir) {
         for (var i = 0; i < dir[com].alias.length; i++) {
             commands[dir[com].alias[i]] = { func: dir[com].command, admin: dir[com].isAdmin };
         }
-        if (com.isAdmin) {
-            helpAdmin += dir[com].helpText + "\n";
+        if (dir[com].isAdmin) {
+            helpAdminDesc += dir[com].helpText + "\n";
+            helpAdminCommands+=dir[com].alias[0]+"\n";
         } else {
-            helpReg += dir[com].helpText + "\n";
+            helpRegDesc += dir[com].helpText + "\n";
+            helpRegCommands+=dir[com].alias[0]+"\n";
         }
     }
 }
@@ -285,6 +287,20 @@ client.on("message", async (message) => {
         if (commands[command].admin && !isAdmin(message.member))
             return message.reply("Only an admin can do that!");
         commands[command].func(message, args, temptotals, exp);
+    } else if (command==="help"){
+        var embed=new Discord.RichEmbed()
+            .setColor(set.defaultcolor)
+            .setTitle("**Grizzbot Commands**")
+            .addField("User Commands","---")
+            .addField("Command",helpRegCommands,true)
+            .addField("Description",helpRegDesc,true);
+        if (isAdmin(message.member)){
+            embed.addBlankField();
+            embed.addField("Admin Commands","---");
+            embed.addField("Command",helpAdminCommands,true)
+            embed.addField("Description",helpAdminDesc,true);
+        }
+        return message.channel.send(embed);
     }
     
 });
