@@ -13,5 +13,8 @@
     "defaultcolor": "#a06df2",
     "daily": 500,
     "randomreward": 250,
-    "maxgive": 10000
+    "maxgive": 10000,
+    "helpexemptions": [
+        "resetteemo"
+    ]   
 }

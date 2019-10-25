@@ -248,14 +248,16 @@ function indexCommands() {
             commands[dir[com].alias[i]] = { func: dir[com].command, admin: dir[com].isAdmin };
         }
         if (dir[com].isAdmin) {
-            if (adminNum % 2 == 1) {
-                helpAdminDesc += "**" + dir[com].helpText + "**\n";
-                helpAdminCommands += "**" + dir[com].alias[0] + "**\n";;
-            } else {
-                helpAdminDesc += dir[com].helpText + "\n";
-                helpAdminCommands += dir[com].alias[0] + "\n";
+            if (!(set.helpexemptions.includes(dir[com].alias[0]))) { //This exempts resetteemo from the help command. It isn't meant to be widely known.
+                if (adminNum % 2 == 1) {
+                    helpAdminDesc += "**" + dir[com].helpText + "**\n";
+                    helpAdminCommands += "**" + dir[com].alias[0] + "**\n";;
+                } else {
+                    helpAdminDesc += dir[com].helpText + "\n";
+                    helpAdminCommands += dir[com].alias[0] + "\n";
+                }
+                adminNum++;
             }
-            adminNum++;
         } else {
             if (regNum % 2 == 0) {
                 helpRegDesc += "**" + dir[com].helpText + "**\n";
@@ -272,7 +274,7 @@ indexCommands();
 
 client.on("ready", () => {
     console.log("GrizzBot Started");
-    client.user.setActivity(set.prefix+"help", { type: 'LISTENING' })
+    client.user.setActivity(set.prefix + "help", { type: 'LISTENING' })
 });
 
 client.on("message", async (message) => {
@@ -311,7 +313,7 @@ client.on("message", async (message) => {
         if (isAdmin(message.member)) {
             embed.addBlankField();
             embed.addField("Admin Commands", "---");
-            embed.addField("Command", helpAdminCommands, true)
+            embed.addField("Command", helpAdminCommands, true);
             embed.addField("Description", helpAdminDesc, true);
         }
         return message.channel.send(embed);
