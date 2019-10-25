@@ -50,7 +50,7 @@ exports.command = async function (message, args, temptotals, exp) {
         message.delete();
         await msg.react('😄');
 
-        msg.awaitReactions(filter3, { time: 6000 * config["mins"] })
+        msg.awaitReactions(filter3, { time: 60000 * config["mins"] })
             .then(async collected => {
                 const reaction = collected.first();
                 var winners = await reaction.fetchUsers();

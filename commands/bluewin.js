@@ -13,8 +13,8 @@ const Discord = require('Discord.js');
 exports.command = async function (message, args, temptotals, exp) {
     for (var key in global.blue) {
         temptotals[key] += global.blue[key] * 2;
-        if (await main.exper(key, 30, true))
-            message.reply("You leveled up!"); //Give EXP
+        await main.exper(key, 30, true);
+            //message.reply("You leveled up!"); //Give EXP
     }
     main.store.updateItem('totals', temptotals);
     main.clearBets();

@@ -1,17 +1,17 @@
 const Discord = require('Discord.js');
 const set = require("./config.json");
-module.exports.set=set;
+module.exports.set = set;
 const getDir = require('require-dir');
 
 const client = new Discord.Client();
-module.exports.client=client;
+module.exports.client = client;
 
 var active = false; // is salty teemo night active
-module.exports.active=active;
+module.exports.active = active;
 var chan; // what channel is it occuring in?
-module.exports.chan=chan;
+module.exports.chan = chan;
 var takebets = false; // take bets?
-module.exports.takebets=takebets;
+module.exports.takebets = takebets;
 
 //datastore stuff
 
@@ -43,7 +43,7 @@ async function awardCash(id, amt) {
     await store.setItem('totals', totals);
     return;
 }
-module.exports.awardCash=awardCash;
+module.exports.awardCash = awardCash;
 
 async function getDaily() {
     var keys = await store.keys()
@@ -53,7 +53,7 @@ async function getDaily() {
         return {};
     }
 }
-module.exports.getDaily=getDaily;
+module.exports.getDaily = getDaily;
 
 async function getExp() {
     var keys = await store.keys()
@@ -67,17 +67,17 @@ async function getExp() {
 global.blue = {}; //blue[id]=bet
 global.red = {}; //red[id]=bet
 
-function clearBets(){
-    global.red={};
-    global.blue={};
+function clearBets() {
+    global.red = {};
+    global.blue = {};
 }
-module.exports.clearBets=clearBets;
+module.exports.clearBets = clearBets;
 
 const req = require("request-promise");
 global.champs = []
 
 var patch = "9.20.1";
-module.exports.patch=patch;
+module.exports.patch = patch;
 function updateChamps() {
     global.champs = [];
     try {
@@ -148,7 +148,7 @@ module.exports.sortExp = sortExp;
 function exp_curve(x) {
     return Math.floor(7 * Math.sqrt(x) + 20);
 }
-module.exports.exp_curve=exp_curve;
+module.exports.exp_curve = exp_curve;
 
 async function exper(id, amt, force) {
     var exp = await getExp();
@@ -178,7 +178,7 @@ async function exper(id, amt, force) {
     await store.updateItem('exp', exp);
     return false;
 }
-module.exports.exper=exper;
+module.exports.exper = exper;
 
 //Random events
 const filter = (reaction, user) => {
@@ -209,11 +209,11 @@ async function randomDrop(channel) {
 
 //Blackjack manager
 var blackjack = {} //[id]=[pcamt,pcstay,useramt,userbet,userdisplayname]
-module.exports.blackjack=blackjack;
+module.exports.blackjack = blackjack;
 function riskAssess(amt) {//This is the mathematical function to determine if the computer should hit or stay.
     return .1 * (-amt - 10) + 2; //can be negative. if negative, safe to bet
 }
-module.exports.riskAssess=riskAssess;
+module.exports.riskAssess = riskAssess;
 
 function getBJEmbed(id) {
     var embed = new Discord.RichEmbed()
@@ -222,7 +222,7 @@ function getBJEmbed(id) {
         .setColor(set.defaultcolor);
     return embed;
 }
-module.exports.getBJEmbed=getBJEmbed;
+module.exports.getBJEmbed = getBJEmbed;
 
 function getBJEmbedFinal(id) {
     var embed = new Discord.RichEmbed()
@@ -231,14 +231,16 @@ function getBJEmbedFinal(id) {
         .setColor(set.defaultcolor);
     return embed;
 }
-module.exports.getBJEmbedFinal=getBJEmbedFinal;
+module.exports.getBJEmbedFinal = getBJEmbedFinal;
 
 //Command Setup
 var commands = {};
+var adminNum = 0;
+var regNum = 0;
 var helpRegDesc = "";
-var helpRegCommands=""
+var helpRegCommands = ""
 var helpAdminDesc = "";
-var helpAdminCommands=""
+var helpAdminCommands = ""
 function indexCommands() {
     var dir = getDir('./commands');
     for (var com in dir) {
@@ -246,19 +248,31 @@ function indexCommands() {
             commands[dir[com].alias[i]] = { func: dir[com].command, admin: dir[com].isAdmin };
         }
         if (dir[com].isAdmin) {
-            helpAdminDesc += dir[com].helpText + "\n";
-            helpAdminCommands+=dir[com].alias[0]+"\n";
+            if (adminNum % 2 == 1) {
+                helpAdminDesc += "**" + dir[com].helpText + "**\n";
+                helpAdminCommands += "**" + dir[com].alias[0] + "**\n";;
+            } else {
+                helpAdminDesc += dir[com].helpText + "\n";
+                helpAdminCommands += dir[com].alias[0] + "\n";
+            }
+            adminNum++;
         } else {
-            helpRegDesc += dir[com].helpText + "\n";
-            helpRegCommands+=dir[com].alias[0]+"\n";
+            if (regNum % 2 == 0) {
+                helpRegDesc += "**" + dir[com].helpText + "**\n";
+                helpRegCommands += "**" + dir[com].alias[0] + "**\n";
+            } else {
+                helpRegDesc += dir[com].helpText + "\n";
+                helpRegCommands += dir[com].alias[0] + "\n";
+            }
+            regNum++;
         }
     }
 }
 indexCommands();
 
 client.on("ready", () => {
-    console.log("Salty Teemo Bot Started");
-    client.user.setActivity('Challenger Replays', { type: 'WATCHING' })
+    console.log("GrizzBot Started");
+    client.user.setActivity(set.prefix+"help", { type: 'LISTENING' })
 });
 
 client.on("message", async (message) => {
@@ -287,22 +301,22 @@ client.on("message", async (message) => {
         if (commands[command].admin && !isAdmin(message.member))
             return message.reply("Only an admin can do that!");
         commands[command].func(message, args, temptotals, exp);
-    } else if (command==="help"){
-        var embed=new Discord.RichEmbed()
+    } else if (command === "help") {
+        var embed = new Discord.RichEmbed()
             .setColor(set.defaultcolor)
             .setTitle("**Grizzbot Commands**")
-            .addField("User Commands","---")
-            .addField("Command",helpRegCommands,true)
-            .addField("Description",helpRegDesc,true);
-        if (isAdmin(message.member)){
+            .addField("User Commands", "---")
+            .addField("Command", helpRegCommands, true)
+            .addField("Description", helpRegDesc, true);
+        if (isAdmin(message.member)) {
             embed.addBlankField();
-            embed.addField("Admin Commands","---");
-            embed.addField("Command",helpAdminCommands,true)
-            embed.addField("Description",helpAdminDesc,true);
+            embed.addField("Admin Commands", "---");
+            embed.addField("Command", helpAdminCommands, true)
+            embed.addField("Description", helpAdminDesc, true);
         }
         return message.channel.send(embed);
     }
-    
+
 });
 
 client.login(set.token);
