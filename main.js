@@ -238,9 +238,10 @@ var commands = {};
 var adminNum = 0;
 var regNum = 0;
 var helpRegDesc = "";
-var helpRegCommands = ""
+var helpRegCommands = "";
 var helpAdminDesc = "";
-var helpAdminCommands = ""
+var helpAdminCommands = "";
+
 function indexCommands() {
     var dir = getDir('./commands');
     for (var com in dir) {
@@ -251,7 +252,7 @@ function indexCommands() {
             if (!(set.helpexemptions.includes(dir[com].alias[0]))) { //This exempts resetteemo from the help command. It isn't meant to be widely known.
                 if (adminNum % 2 == 1) {
                     helpAdminDesc += "**" + dir[com].helpText + "**\n";
-                    helpAdminCommands += "**" + dir[com].alias[0] + "**\n";;
+                    helpAdminCommands += "**" + dir[com].alias[0] + "**\n";
                 } else {
                     helpAdminDesc += dir[com].helpText + "\n";
                     helpAdminCommands += dir[com].alias[0] + "\n";
