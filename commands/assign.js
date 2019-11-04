@@ -3,6 +3,8 @@ exports.alias = ["assign", "giverole"]; //Commands equivalents
 
 exports.isAdmin = true; //Must be admin to use?
 
+exports.arguments = ["@user","role"]
+
 exports.helpText = "Gives a user a certain role.";
 
 //Requirements

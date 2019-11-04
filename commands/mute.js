@@ -1,6 +1,8 @@
 //Settings
 exports.alias = ["mute"]; //Commands equivalents
 
+exports.arguments=["@user"];
+
 exports.isAdmin = true; //Must be admin to use?
 
 exports.helpText = "Mutes a user.";

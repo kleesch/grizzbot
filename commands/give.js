@@ -3,6 +3,8 @@ exports.alias = ["give"]; //Commands equivalents
 
 exports.isAdmin = true; //Must be admin to use?
 
+exports.arguments=["@user","amt"];
+
 exports.helpText = "Gives a user the specified amount.";
 
 //Requirements

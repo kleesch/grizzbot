@@ -1,6 +1,8 @@
 //Settings
 exports.alias = ["blue"]; //Commands equivalents
 
+exports.arguments = ["amt"];
+
 exports.isAdmin = false; //Must be admin to use?
 
 exports.helpText = "Bets the specified amount on blue.";

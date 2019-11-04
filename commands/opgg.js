@@ -3,6 +3,8 @@ exports.alias = ["op.gg","opgg"]; //Commands equivalents
 
 exports.isAdmin = false; //Must be admin to use?
 
+exports.arguments=["user"];
+
 exports.helpText = "Generates a random link for ultimate bravery.";
 
 //Requirements

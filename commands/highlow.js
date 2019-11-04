@@ -1,6 +1,8 @@
 //Settings
 exports.alias = ["highlow","hl"]; //Commands equivalents
 
+exports.arguments=["amt"];
+
 exports.isAdmin = false; //Must be admin to use?
 
 exports.helpText = "Bets the amount on a higher/lower game.";

@@ -251,22 +251,38 @@ function indexCommands() {
         if (dir[com].isAdmin) {
             if (!(set.helpexemptions.includes(dir[com].alias[0]))) { //This exempts resetteemo from the help command. It isn't meant to be widely known.
                 if (adminNum % 2 == 1) {
-                    helpAdminDesc += "**" + dir[com].helpText + "**\n";
-                    helpAdminCommands += "**" + dir[com].alias[0] + "**\n";
+                    helpAdminDesc += "**" + dir[com].helpText + "**";
+                    helpAdminCommands += "**" + dir[com].alias[0] + "**";
+                    if (dir[com].hasOwnProperty("arguments"))
+                        for (var i=0;i<dir[com]["arguments"].length;i++)
+                            helpAdminCommands+=" **["+dir[com]["arguments"][i]+"]**";
                 } else {
-                    helpAdminDesc += dir[com].helpText + "\n";
-                    helpAdminCommands += dir[com].alias[0] + "\n";
+                    helpAdminDesc += dir[com].helpText;
+                    helpAdminCommands += dir[com].alias[0];
+                    if (dir[com].hasOwnProperty("arguments"))
+                        for (var i=0;i<dir[com]["arguments"].length;i++)
+                            helpAdminCommands+=" ["+dir[com]["arguments"][i]+"]";
                 }
+                helpAdminDesc += "\n";
+                helpAdminCommands += "\n";
                 adminNum++;
             }
         } else {
             if (regNum % 2 == 0) {
-                helpRegDesc += "**" + dir[com].helpText + "**\n";
-                helpRegCommands += "**" + dir[com].alias[0] + "**\n";
+                helpRegDesc += "**" + dir[com].helpText + "**";
+                helpRegCommands += "**" + dir[com].alias[0] + "**";
+                if (dir[com].hasOwnProperty("arguments"))
+                        for (var i=0;i<dir[com]["arguments"].length;i++)
+                            helpRegCommands+=" **["+dir[com]["arguments"][i]+"]**";
             } else {
-                helpRegDesc += dir[com].helpText + "\n";
-                helpRegCommands += dir[com].alias[0] + "\n";
+                helpRegDesc += dir[com].helpText;
+                helpRegCommands += dir[com].alias[0];
+                if (dir[com].hasOwnProperty("arguments"))
+                        for (var i=0;i<dir[com]["arguments"].length;i++)
+                            helpRegCommands+=" ["+dir[com]["arguments"][i]+"]";
             }
+            helpRegCommands+="\n";
+            helpRegDesc+="\n";
             regNum++;
         }
     }

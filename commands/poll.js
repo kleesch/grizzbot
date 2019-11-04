@@ -1,6 +1,8 @@
 //Settings
 exports.alias = ["poll"]; //Commands equivalents
 
+exports.arguments=["a,b,c","question"];
+
 exports.isAdmin = true; //Must be admin to use?
 
 exports.helpText = "Holds a poll in the same channel.";

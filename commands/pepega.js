@@ -1,6 +1,8 @@
 //Settings
 exports.alias = ["pepega"]; //Commands equivalents
 
+exports.arguments=["@user"];
+
 exports.isAdmin = true; //Must be admin to use?
 
 exports.helpText = "Identifies a certain user as a pepega.";

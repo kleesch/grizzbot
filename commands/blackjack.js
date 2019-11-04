@@ -3,6 +3,8 @@ exports.alias = ["blackjack"]; //Commands equivalents
 
 exports.isAdmin = false; //Must be admin to use?
 
+exports.arguments=["amt"];
+
 exports.helpText = "Bets the amount on a blackjack game.";
 
 //Requirements

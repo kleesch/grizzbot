@@ -1,9 +1,11 @@
 //Settings
 exports.alias = ["remove", "removerole"]; //Commands equivalents
 
+exports.arguments=["@user","role"];
+
 exports.isAdmin = true; //Must be admin to use?
 
-exports.helpText = "Gives a user a certain role.";
+exports.helpText = "Remove a certain role from a user.";
 
 //Requirements
 var main = require('../main.js');

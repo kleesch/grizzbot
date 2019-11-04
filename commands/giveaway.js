@@ -1,9 +1,11 @@
 //Settings
 exports.alias = ["giveaway"]; //Commands equivalents
 
+exports.arguments = ["setting:val"]
+
 exports.isAdmin = true; //Must be admin to use?
 
-exports.helpText = "Holds a giveaway.";
+exports.helpText = "Holds a giveaway. Settings: amt,ppl,mins";
 
 //Requirements
 var main = require('../main.js');
