@@ -233,6 +233,9 @@ function getBJEmbedFinal(id) {
 }
 module.exports.getBJEmbedFinal = getBJEmbedFinal;
 
+//Easter Egg
+const eegg=require("./eastereggs.json");
+
 //Command Setup
 var commands = {};
 var adminNum = 0;
@@ -302,6 +305,9 @@ client.on("message", async (message) => {
     if (message.content.indexOf(set.prefix) !== 0) {
         if (Math.floor((Math.random() * 100 + 1)) <= 1)
             randomDrop(message.channel);
+        var words=message.content.split(" ");
+        if (eegg.hasOwnProperty(words[0]))
+            message.channel.send(eegg[words[0]]);
         return;
     }
     const args = message.content.slice(set.prefix.length).trim().split(/ +/g);
