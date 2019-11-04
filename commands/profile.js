@@ -12,7 +12,7 @@ const Discord = require('Discord.js');
 //Command
 exports.command=function(message, args, temptotals, exp) {
     var loadbar = "";
-    var target=message.member.displayName;
+    var target=message.member;
     var targetId=message.author.id;
     if (message.mentions.members.first()){
         targetId=message.mentions.members.first().id;
