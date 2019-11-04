@@ -1,5 +1,5 @@
 {
-    "prefix": ">",
+    "prefix": "!",
     "token": "NjMzNDQwMTMyNzcwNDMwOTg2.XaT_Rw.0BMFHhocQxiimaIhSKd-B0O7sRY",
     "adminroles": [
         "Officer"
@@ -10,7 +10,7 @@
         "156569849248612352"
     ],
     "startingamount": 500,
-    "defaultcolor": "#a06df2",
+    "defaultcolor": "#1c86ff",
     "daily": 500,
     "randomreward": 250,
     "maxgive": 10000,
