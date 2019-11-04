@@ -240,7 +240,7 @@ const eegg = require("./eastereggs.json");
 var commands = {};
 var adminHelp = new Discord.RichEmbed()
     .setColor(set.defaultcolor)
-    .setTitle("**Grizzbot Commands**");
+    .setTitle("**Grizzbot Admin Commands**");
 var regHelp = new Discord.RichEmbed()
     .setColor(set.defaultcolor)
     .setTitle("**Grizzbot Commands**");
