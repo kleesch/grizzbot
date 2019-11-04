@@ -15,3 +15,4 @@ exports.command = function (message, args, temptotals, exp) {
     return;
 }
 
+exports.category="Misc";

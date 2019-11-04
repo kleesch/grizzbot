@@ -24,3 +24,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.reply("You have received your daily reward!");
 }
 
+exports.category="Misc";

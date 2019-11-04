@@ -26,3 +26,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.reply("Successfully given");
 }
 
+exports.category="Misc";

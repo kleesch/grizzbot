@@ -20,3 +20,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send("Salty teemo night is over!");
 }
 
+exports.category="Salty Teemo";

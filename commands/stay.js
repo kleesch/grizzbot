@@ -48,3 +48,4 @@ exports.command = async function (message, args, temptotals, exp) {
     }
 }
 
+exports.category="Betting";

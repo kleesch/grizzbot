@@ -22,3 +22,4 @@ exports.command = function (message, args, temptotals, exp) {
     return message.reply(embed);
 }
 
+exports.category="Misc";

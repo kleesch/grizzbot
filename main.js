@@ -238,80 +238,84 @@ const eegg = require("./eastereggs.json");
 
 //Command Setup
 var commands = {};
-var adminNum = 0;
-var regNum = 0;
-var helpRegDesc = "";
-var helpRegCommands = "";
-var helpAdminDesc = "";
-var helpAdminCommands = "";
+var adminHelp = new Discord.RichEmbed()
+    .setColor(set.defaultcolor)
+    .setTitle("**Grizzbot Commands**");
+var regHelp = new Discord.RichEmbed()
+    .setColor(set.defaultcolor)
+    .setTitle("**Grizzbot Commands**");
 
 function indexCommands() {
     var dir = getDir('./commands');
+    let adminCommands = {
+        'Misc': [],
+        'Betting': [],
+        'Salty Teemo': []
+    }
+    let regCommands = {
+        'Misc': [],
+        'Betting': [],
+        'Salty Teemo': []
+    }
     for (var com in dir) {
         for (var i = 0; i < dir[com].alias.length; i++) {
             commands[dir[com].alias[i]] = { func: dir[com].command, admin: dir[com].isAdmin };
         }
-        if (dir[com].isAdmin) {
-            if (!(set.helpexemptions.includes(dir[com].alias[0]))) { //This exempts resetteemo from the help command. It isn't meant to be widely known.
-                if (adminNum % 2 == 1) {
-                    helpAdminDesc += "**" + dir[com].helpText + "**";
-                    helpAdminCommands += "**" + dir[com].alias[0] + "**";
-                    if (dir[com].hasOwnProperty("arguments"))
-                        for (var i = 0; i < dir[com]["arguments"].length; i++)
-                            helpAdminCommands += " **[" + dir[com]["arguments"][i] + "]**";
-                } else {
-                    helpAdminDesc += dir[com].helpText;
-                    helpAdminCommands += dir[com].alias[0];
-                    if (dir[com].hasOwnProperty("arguments"))
-                        for (var i = 0; i < dir[com]["arguments"].length; i++)
-                            helpAdminCommands += " [" + dir[com]["arguments"][i] + "]";
-                }
-                helpAdminDesc += "\n";
-                helpAdminCommands += "\n";
-                adminNum++;
-            }
-        } else {
-            if (regNum % 2 == 0) {
-                helpRegDesc += "**" + dir[com].helpText + "**";
-                helpRegCommands += "**" + dir[com].alias[0] + "**";
-                if (dir[com].hasOwnProperty("arguments"))
-                    for (var i = 0; i < dir[com]["arguments"].length; i++)
-                        helpRegCommands += " **[" + dir[com]["arguments"][i] + "]**";
+
+        if (!set.helpexemptions.includes(dir[com].alias[0])) {
+            var title = dir[com].alias[0];
+            if (dir[com].hasOwnProperty("arguments"))
+                for (var i = 0; i < dir[com]["arguments"].length; i++)
+                    title += " [" + dir[com]["arguments"][i] + "]";
+            if (dir[com].isAdmin) {
+                adminCommands[dir[com]["category"]].push([title, dir[com].helpText]);
             } else {
-                helpRegDesc += dir[com].helpText;
-                helpRegCommands += dir[com].alias[0];
-                if (dir[com].hasOwnProperty("arguments"))
-                    for (var i = 0; i < dir[com]["arguments"].length; i++)
-                        helpRegCommands += " [" + dir[com]["arguments"][i] + "]";
+                regCommands[dir[com]["category"]].push([title, dir[com].helpText]);
             }
-            helpRegCommands += "\n";
-            helpRegDesc += "\n";
-            regNum++;
+        }
+
+    }
+    for (cat in adminCommands) {
+        if (adminCommands[cat].length > 0) {
+            adminHelp.addField(`*${cat} Commands*`, "\u200b")
+            var cmdstr = "";
+            var descstr = "";
+            for (var i = 0; i < adminCommands[cat].length; i++) {
+                cmdstr += ((i % 2 == 0) ? `**${adminCommands[cat][i][0]}**\n` : `${adminCommands[cat][i][0]}\n`);
+                descstr += ((i % 2 == 0) ? `**${adminCommands[cat][i][1]}**\n` : `${adminCommands[cat][i][1]}\n`);
+            }
+
+            adminHelp.addField("Command", cmdstr, true);
+            adminHelp.addField("Description", descstr, true);
+            if (!(cat == "Salty Teemo"))
+                adminHelp.addBlankField();
+        }
+    }
+
+    for (cat in regCommands) {
+        if (regCommands[cat].length > 0) {
+            regHelp.addField(`*${cat} Commands*`, "\u200b")
+            var cmdstr = "";
+            var descstr = "";
+            for (var i = 0; i < regCommands[cat].length; i++) {
+                cmdstr += (i % 2 == 0) ? `**${regCommands[cat][i][0]}**\n` : `${regCommands[cat][i][0]}\n`;
+                descstr += (i % 2 == 0) ? `**${regCommands[cat][i][1]}**\n` : `${regCommands[cat][i][1]}\n`;
+            }
+            regHelp.addField("Command", cmdstr, true);
+            regHelp.addField("Description", descstr, true);
+            if (!(cat == "Salty Teemo"))
+                regHelp.addBlankField();
         }
     }
 }
 indexCommands();
 
-var regHelp = new Discord.RichEmbed()
-    .setColor(set.defaultcolor)
-    .setTitle("**Grizzbot Commands**")
-    .addField("User Commands", "---")
-    .addField("Command", helpRegCommands, true)
-    .addField("Description", helpRegDesc, true);
-
-var adminHelp = new Discord.RichEmbed()
-    .setColor(set.defaultcolor)
-    .setTitle("**Grizzbot Commands**")
-    .addField("Admin Commands", "---")
-    .addField("Command", helpRegCommands, true)
-    .addField("Description", helpRegDesc, true);
-
-commands['help']={
+commands['help'] = {
     'admin': false,
-    'func': async function(message, args, temptotals, exp){
-        var is=isAdmin(message.author);
-        if (args.length==1){
-            switch (args[0]){
+    'func': async function (message, args, temptotals, exp) {
+        var is = isAdmin(message.author);
+        if (args.length == 1) {
+            switch (args[0]) {
                 case "admin":
                     return message.channel.send(adminHelp);
                 case "user":

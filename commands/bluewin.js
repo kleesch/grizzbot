@@ -21,3 +21,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send("Bets distributed!");
 }
 
+exports.category="Salty Teemo";

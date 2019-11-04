@@ -32,3 +32,4 @@ exports.command = function (message, args, temptotals, exp) {
         return message.reply("Bet set for " + args[0] + " on blue!");
     }
 }
+exports.category="Salty Teemo";

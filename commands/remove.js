@@ -24,3 +24,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send("<@" + message.mentions.members.first().id + "> has had the role removed.");
 }
 
+exports.category="Misc";

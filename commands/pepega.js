@@ -22,3 +22,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send("<@" + message.mentions.members.first().id + "> is super <:pepega:565251747594108939>");
 }
 
+exports.category="Misc";

@@ -23,3 +23,4 @@ exports.command = function (message, args, temptotals, exp) {
     }
 }
 
+exports.category="Salty Teemo";

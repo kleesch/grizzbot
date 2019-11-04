@@ -22,3 +22,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send("<@" + message.mentions.members.first().id + "> has been muted.");
 }
 
+exports.category="Misc";

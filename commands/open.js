@@ -19,3 +19,4 @@ exports.command = function (message, args, temptotals, exp) {
     return message.channel.send("**Betting is now open!**");
 }
 
+exports.category="Salty Teemo";

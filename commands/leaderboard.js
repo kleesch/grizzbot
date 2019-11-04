@@ -29,3 +29,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send(embed);
 }
 
+exports.category="Misc";

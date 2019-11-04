@@ -10,7 +10,7 @@ var main=require('../main.js');
 const Discord = require('Discord.js');
 
 //Command
-exports.command=function(message, args, temptotals, exp) {
+exports.command=async function(message, args, temptotals, exp) {
     var loadbar = "";
     var target=message.member;
     var targetId=message.author.id;
@@ -63,3 +63,4 @@ exports.command=function(message, args, temptotals, exp) {
     return message.channel.send("<@" + message.author.id + ">", embed);
 }
 
+exports.category="Misc";

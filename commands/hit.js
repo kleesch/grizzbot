@@ -25,3 +25,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send(main.getBJEmbed(id));
 }
 
+exports.category="Betting";
