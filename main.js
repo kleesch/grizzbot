@@ -85,7 +85,7 @@ function updateChamps() {
         req('https://ddragon.leagueoflegends.com/api/versions.json').then(function (body) {
             ver = JSON.parse(body);
             patch = ver[0];
-            req('http://ddragon.leagueoflegends.com/cdn/' + ver[0] + '/data/en_US/champion.json').then(function (body) {
+            req(`http://ddragon.leagueoflegends.com/cdn/${ver[0]}/data/en_US/champion.json`).then(function (body) {
                 var stuff = JSON.parse(body);
                 for (var name in stuff["data"])
                     global.champs.push(name);
@@ -226,8 +226,8 @@ module.exports.getBJEmbed = getBJEmbed;
 
 function getBJEmbedFinal(id) {
     var embed = new Discord.RichEmbed()
-        .setTitle("Blackjack with " + blackjack[id][4])
-        .setDescription("Dealer: " + blackjack[id][0] + "\n\nYou: " + blackjack[id][2])
+        .setTitle(`Blackjack with ${blackjack[id][4]}`)
+        .setDescription(`Dealer: ${blackjack[id][0]}\n\nYou: ${blackjack[id][2]}`)
         .setColor(set.defaultcolor);
     return embed;
 }
@@ -266,7 +266,7 @@ function indexCommands() {
             var title = dir[com].alias[0];
             if (dir[com].hasOwnProperty("arguments"))
                 for (var i = 0; i < dir[com]["arguments"].length; i++)
-                    title += " [" + dir[com]["arguments"][i] + "]";
+                    title += ` [${dir[com]["arguments"][i]}]`;
             if (dir[com].isAdmin) {
                 adminCommands[dir[com]["category"]].push([title, dir[com].helpText]);
             } else {
@@ -277,34 +277,35 @@ function indexCommands() {
     }
     for (cat in adminCommands) {
         if (adminCommands[cat].length > 0) {
-            adminHelp.addField(`*${cat} Commands*`, "\u200b")
-            var cmdstr = "";
-            var descstr = "";
-            for (var i = 0; i < adminCommands[cat].length; i++) {
+            let cmdstr = "";
+            let descstr = "";
+            for (let i = 0; i < adminCommands[cat].length; i++) {
                 cmdstr += ((i % 2 == 0) ? `**${adminCommands[cat][i][0]}**\n` : `${adminCommands[cat][i][0]}\n`);
                 descstr += ((i % 2 == 0) ? `**${adminCommands[cat][i][1]}**\n` : `${adminCommands[cat][i][1]}\n`);
             }
-
-            adminHelp.addField("Command", cmdstr, true);
-            adminHelp.addField("Description", descstr, true);
-            if (!(cat == "Salty Teemo"))
-                adminHelp.addBlankField();
+            if (!(cat == "Salty Teemo")) {
+                cmdstr += "\u200b\n";
+                descstr += "\u200b\n";
+            }
+            adminHelp.addField(`${cat} Commands`, cmdstr, true);
+            adminHelp.addField("Descriptions", descstr, true);
         }
     }
 
     for (cat in regCommands) {
         if (regCommands[cat].length > 0) {
-            regHelp.addField(`*${cat} Commands*`, "\u200b")
-            var cmdstr = "";
-            var descstr = "";
-            for (var i = 0; i < regCommands[cat].length; i++) {
+            let cmdstr = "";
+            let descstr = "";
+            for (let i = 0; i < regCommands[cat].length; i++) {
                 cmdstr += (i % 2 == 0) ? `**${regCommands[cat][i][0]}**\n` : `${regCommands[cat][i][0]}\n`;
                 descstr += (i % 2 == 0) ? `**${regCommands[cat][i][1]}**\n` : `${regCommands[cat][i][1]}\n`;
             }
-            regHelp.addField("Command", cmdstr, true);
-            regHelp.addField("Description", descstr, true);
-            if (!(cat == "Salty Teemo"))
-                regHelp.addBlankField();
+            if (!(cat == "Salty Teemo")) {
+                cmdstr += "\u200b\n";
+                descstr += "\u200b\n";
+            }
+            regHelp.addField(`${cat} Commands`, cmdstr, true);
+            regHelp.addField("Descriptions", descstr, true);
         }
     }
 }
@@ -329,7 +330,7 @@ commands['help'] = {
 
 client.on("ready", () => {
     console.log("GrizzBot Started");
-    client.user.setActivity(set.prefix + "help", { type: 'LISTENING' })
+    client.user.setActivity(`${set.prefix}help`, { type: 'LISTENING' })
 });
 
 client.on("message", async (message) => {
@@ -354,7 +355,7 @@ client.on("message", async (message) => {
     if (!(message.author.id in temptotals)) {
         temptotals[message.author.id] = set.startingamount;
         store.updateItem('totals', temptotals);
-        message.reply("Your profile has been created with " + set.startingamount);
+        message.reply(`Your profile has been created with ${set.startingamount}`);
     }
     if (commands.hasOwnProperty(command)) {
         if (commands[command].admin && !isAdmin(message.member))
