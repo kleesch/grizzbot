@@ -16,6 +16,7 @@
     "maxgive": 10000,
     "helpexemptions": [
         "resetteemo",
-        "help"
+        "help",
+        "eval"
     ]   
 }
