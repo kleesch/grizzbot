@@ -155,7 +155,7 @@ async function exper(id, amt, force) {
     if (!(id in exp)) {
         exp[id] = {
             "lvl": 0,
-            "raw": 20,
+            "raw": exp_curve(0),
             "cd": new Date(2000),
         };
     };
@@ -307,8 +307,7 @@ var adminHelp = new Discord.RichEmbed()
     .addField("Description", helpRegDesc, true);
 
 commands['help']={
-    'alias': ['help'],
-    'isAdmin': false,
+    'admin': false,
     'func': async function(message, args, temptotals, exp){
         var is=isAdmin(message.author);
         if (args.length==1){

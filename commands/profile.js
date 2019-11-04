@@ -18,6 +18,18 @@ exports.command=function(message, args, temptotals, exp) {
         targetId=message.mentions.members.first().id;
         target=message.mentions.members.first();
     }
+    if(!(targetId in exp)){
+        exp[targetId] = {
+            "lvl": 0,
+            "raw": main.exp_curve(0),
+            "cd": new Date(2000),
+        };
+        await store.updateItem('exp', exp);
+    }
+    if (!(message.author.id in temptotals)) {
+        temptotals[message.author.id] = set.startingamount;
+        store.updateItem('totals', temptotals);
+    }
     var nxt = main.exp_curve(exp[targetId]["lvl"] + 1);
     try {
         var sum = 0;
