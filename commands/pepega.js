@@ -19,6 +19,6 @@ exports.command = async function (message, args, temptotals, exp) {
         return message.reply("That user has already been identified as a pepega!");
     var role = message.guild.roles.find(r => r.name === "pepega")
     message.mentions.members.first().addRole(role).catch(console.log);
-    return message.channel.send("<@" + message.mentions.members.first().id + "> is super <append pepega here>");
+    return message.channel.send("<@" + message.mentions.members.first().id + "> is super <:pepega:565251747594108939>");
 }
 

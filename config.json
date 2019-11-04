@@ -15,6 +15,7 @@
     "randomreward": 250,
     "maxgive": 10000,
     "helpexemptions": [
-        "resetteemo"
+        "resetteemo",
+        "help"
     ]   
 }

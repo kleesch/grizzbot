@@ -234,7 +234,7 @@ function getBJEmbedFinal(id) {
 module.exports.getBJEmbedFinal = getBJEmbedFinal;
 
 //Easter Egg
-const eegg=require("./eastereggs.json");
+const eegg = require("./eastereggs.json");
 
 //Command Setup
 var commands = {};
@@ -257,14 +257,14 @@ function indexCommands() {
                     helpAdminDesc += "**" + dir[com].helpText + "**";
                     helpAdminCommands += "**" + dir[com].alias[0] + "**";
                     if (dir[com].hasOwnProperty("arguments"))
-                        for (var i=0;i<dir[com]["arguments"].length;i++)
-                            helpAdminCommands+=" **["+dir[com]["arguments"][i]+"]**";
+                        for (var i = 0; i < dir[com]["arguments"].length; i++)
+                            helpAdminCommands += " **[" + dir[com]["arguments"][i] + "]**";
                 } else {
                     helpAdminDesc += dir[com].helpText;
                     helpAdminCommands += dir[com].alias[0];
                     if (dir[com].hasOwnProperty("arguments"))
-                        for (var i=0;i<dir[com]["arguments"].length;i++)
-                            helpAdminCommands+=" ["+dir[com]["arguments"][i]+"]";
+                        for (var i = 0; i < dir[com]["arguments"].length; i++)
+                            helpAdminCommands += " [" + dir[com]["arguments"][i] + "]";
                 }
                 helpAdminDesc += "\n";
                 helpAdminCommands += "\n";
@@ -275,22 +275,54 @@ function indexCommands() {
                 helpRegDesc += "**" + dir[com].helpText + "**";
                 helpRegCommands += "**" + dir[com].alias[0] + "**";
                 if (dir[com].hasOwnProperty("arguments"))
-                        for (var i=0;i<dir[com]["arguments"].length;i++)
-                            helpRegCommands+=" **["+dir[com]["arguments"][i]+"]**";
+                    for (var i = 0; i < dir[com]["arguments"].length; i++)
+                        helpRegCommands += " **[" + dir[com]["arguments"][i] + "]**";
             } else {
                 helpRegDesc += dir[com].helpText;
                 helpRegCommands += dir[com].alias[0];
                 if (dir[com].hasOwnProperty("arguments"))
-                        for (var i=0;i<dir[com]["arguments"].length;i++)
-                            helpRegCommands+=" ["+dir[com]["arguments"][i]+"]";
+                    for (var i = 0; i < dir[com]["arguments"].length; i++)
+                        helpRegCommands += " [" + dir[com]["arguments"][i] + "]";
             }
-            helpRegCommands+="\n";
-            helpRegDesc+="\n";
+            helpRegCommands += "\n";
+            helpRegDesc += "\n";
             regNum++;
         }
     }
 }
 indexCommands();
+
+var regHelp = new Discord.RichEmbed()
+    .setColor(set.defaultcolor)
+    .setTitle("**Grizzbot Commands**")
+    .addField("User Commands", "---")
+    .addField("Command", helpRegCommands, true)
+    .addField("Description", helpRegDesc, true);
+
+var adminHelp = new Discord.RichEmbed()
+    .setColor(set.defaultcolor)
+    .setTitle("**Grizzbot Commands**")
+    .addField("Admin Commands", "---")
+    .addField("Command", helpRegCommands, true)
+    .addField("Description", helpRegDesc, true);
+
+commands['help']={
+    'alias': ['help'],
+    'isAdmin': false,
+    'func': async function(message, args, temptotals, exp){
+        var is=isAdmin(message.author);
+        if (args.length==1){
+            switch (args[0]){
+                case "admin":
+                    return message.channel.send(adminHelp);
+                case "user":
+                    return message.channel.send(regHelp);
+            }
+        } else {
+            return message.channel.send(regHelp);
+        }
+    }
+}
 
 client.on("ready", () => {
     console.log("GrizzBot Started");
@@ -305,9 +337,9 @@ client.on("message", async (message) => {
     if (message.content.indexOf(set.prefix) !== 0) {
         if (Math.floor((Math.random() * 100 + 1)) <= 1)
             randomDrop(message.channel);
-        var words=message.content.split(" ");
-        if (eegg.hasOwnProperty(words[0]))
-            message.channel.send(eegg[words[0]]);
+        for (trigger in eegg)
+            if (message.content.includes(trigger))
+                return message.channel.send(eegg[trigger]);
         return;
     }
     const args = message.content.slice(set.prefix.length).trim().split(/ +/g);
@@ -321,25 +353,10 @@ client.on("message", async (message) => {
         store.updateItem('totals', temptotals);
         message.reply("Your profile has been created with " + set.startingamount);
     }
-    // When the time comes!
     if (commands.hasOwnProperty(command)) {
         if (commands[command].admin && !isAdmin(message.member))
             return message.reply("Only an admin can do that!");
         commands[command].func(message, args, temptotals, exp);
-    } else if (command === "help") {
-        var embed = new Discord.RichEmbed()
-            .setColor(set.defaultcolor)
-            .setTitle("**Grizzbot Commands**")
-            .addField("User Commands", "---")
-            .addField("Command", helpRegCommands, true)
-            .addField("Description", helpRegDesc, true);
-        if (isAdmin(message.member)) {
-            embed.addBlankField();
-            embed.addField("Admin Commands", "---");
-            embed.addField("Command", helpAdminCommands, true);
-            embed.addField("Description", helpAdminDesc, true);
-        }
-        return message.channel.send(embed);
     }
 
 });
