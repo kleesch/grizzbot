@@ -5,7 +5,7 @@ exports.isAdmin = false; //Must be admin to use?
 
 exports.arguments=["user"];
 
-exports.helpText = "Generates a random link for ultimate bravery.";
+exports.helpText = "Generates a link to an op.gg profile.";
 
 //Requirements
 var main = require('../main.js');
