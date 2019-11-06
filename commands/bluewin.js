@@ -11,6 +11,8 @@ const Discord = require('Discord.js');
 
 //Command
 exports.command = async function (message, args, temptotals, exp) {
+    if (Object.keys(global.red).length==0 && Object.keys(global.blue).length==0)
+        return message.reply("There isn't an active game!");
     for (var key in global.blue) {
         temptotals[key] += global.blue[key] * 2;
         await main.exper(key, 30, true);

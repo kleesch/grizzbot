@@ -24,12 +24,12 @@ exports.command = function (message, args, temptotals, exp) {
     else if (main.hasBet(message.author.id))
         return message.reply("You have already bet!");
     else {
-        var bet = Math.floor(parseInt(args[0]));
+        var bet = Math.abs(Math.floor(parseInt(args[0])));
         if (bet * 2 > Number.MAX_SAFE_INTEGER)
             return message.reply("Bet too large.");
         global.blue[message.author.id] = bet;
         main.awardCash(message.author.id, -1 * bet);
-        return message.reply("Bet set for " + args[0] + " on blue!");
+        return message.reply("Bet set for " + bet + " on blue!");
     }
 }
 exports.category="Salty Teemo";
