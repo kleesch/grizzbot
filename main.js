@@ -76,15 +76,14 @@ module.exports.clearBets = clearBets;
 const req = require("request-promise");
 global.champs = []
 
-var patch = "9.20.1";
-module.exports.patch = patch;
+global.patch = "9.20.1";
 function updateChamps() {
     global.champs = [];
     try {
         var ver;
         req('https://ddragon.leagueoflegends.com/api/versions.json').then(function (body) {
             ver = JSON.parse(body);
-            patch = ver[0];
+            global.patch = ver[0];
             req(`http://ddragon.leagueoflegends.com/cdn/${ver[0]}/data/en_US/champion.json`).then(function (body) {
                 var stuff = JSON.parse(body);
                 for (var name in stuff["data"])
@@ -93,7 +92,7 @@ function updateChamps() {
             });
         });
     } catch (err) {
-        champs = ["Error loading champion data. Try teemo?"];
+        global.champs = ["Error loading champion data. Try teemo?"];
         console.log(err);
     }
 }

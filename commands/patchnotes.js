@@ -11,7 +11,7 @@ const Discord = require('Discord.js');
 
 //Command
 exports.command = function (message, args, temptotals, exp) {
-    var patchspl = main.patch.split(".");
+    var patchspl = global.patch.split(".");
     var embed = new Discord.RichEmbed()
         .setTitle("Patch Notes for " + patchspl[0] + "." + patchspl[1])
         .setDescription("[Click Here](https://na.leagueoflegends.com/en/news/game-updates/patch/patch-" + patchspl[0] + patchspl[1] + "-notes)")
