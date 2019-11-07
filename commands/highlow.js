@@ -18,7 +18,7 @@ exports.command = async function (message, args, temptotals, exp) {
     var bet = Math.floor(parseInt(args[0]));
     if (bet <= 0)
         return message.reply("Invalid Amount");
-    if (bet * 2 > Number.MAX_SAFE_INTEGER)
+    if (bet * 2 > Number.MAX_SAFE_INTEGER || bet>main.set.maxbet)
         return message.reply("Bet too big.");
     if (!(message.author.id in global.cooldowns))
         global.cooldowns[message.author.id] = new Date(2000);

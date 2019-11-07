@@ -18,5 +18,6 @@
         "resetteemo",
         "help",
         "eval"
-    ]   
+    ],
+    "maxbet": 5000
 }
