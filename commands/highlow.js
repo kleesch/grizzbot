@@ -1,7 +1,7 @@
 //Settings
-exports.alias = ["highlow","hl"]; //Commands equivalents
+exports.alias = ["highlow", "hl"]; //Commands equivalents
 
-exports.arguments=["amt"];
+exports.arguments = ["amt"];
 
 exports.isAdmin = false; //Must be admin to use?
 
@@ -20,6 +20,12 @@ exports.command = async function (message, args, temptotals, exp) {
         return message.reply("Invalid Amount");
     if (bet * 2 > Number.MAX_SAFE_INTEGER)
         return message.reply("Bet too big.");
+    if (!(message.author.id in global.cooldowns))
+        global.cooldowns[message.author.id] = new Date(2000);
+    var long = Math.abs(((new Date()).getTime() - (new Date(global.cooldowns[message.author.id])).getTime()));
+    if (long/60000 < 1)
+        return message.reply("You can't make another bet yet!");
+    global.cooldowns[message.author.id]=new Date();
     main.awardCash(message.author.id, -1 * bet);
     const filter2 = (reaction, user) => {
         return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
@@ -47,7 +53,7 @@ exports.command = async function (message, args, temptotals, exp) {
                 }
                 if (won) {
                     embed.setDescription("Number 1: **" + first + "**\nNumber 2: **" + second + "**\n\nYou guessed correctly! Congratulations!");
-                    await main.awardCash(message.author.id, 2 * bet);
+                    await main.awardCash(message.author.id, 1.25 * bet);
                 } else {
                     embed.setDescription("Number 1: **" + first + "**\nNumber 2: **" + second + "**\n\nYou guessed incorrectly.");
                 }
@@ -64,4 +70,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return;
 }
 
-exports.category="Betting";
+exports.category = "Betting";

@@ -12,7 +12,7 @@
     "startingamount": 500,
     "defaultcolor": "#1c86ff",
     "daily": 500,
-    "randomreward": 250,
+    "randomreward": 500,
     "maxgive": 10000,
     "helpexemptions": [
         "resetteemo",
