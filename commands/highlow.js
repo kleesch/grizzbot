@@ -13,7 +13,7 @@ const Discord = require('Discord.js');
 
 //Command
 exports.command = async function (message, args, temptotals, exp) {
-    if (isNaN(args[0]))
+    if (isNaN(parseInt(args[0])))
         return message.reply("Invalid Amount");
     var bet = Math.floor(parseInt(args[0]));
     if (bet <= 0)
@@ -53,7 +53,7 @@ exports.command = async function (message, args, temptotals, exp) {
                 }
                 if (won) {
                     embed.setDescription("Number 1: **" + first + "**\nNumber 2: **" + second + "**\n\nYou guessed correctly! Congratulations!");
-                    await main.awardCash(message.author.id, 1.25 * bet);
+                    await main.awardCash(message.author.id, Math.floor(1.25 * bet));
                 } else {
                     embed.setDescription("Number 1: **" + first + "**\nNumber 2: **" + second + "**\n\nYou guessed incorrectly.");
                 }

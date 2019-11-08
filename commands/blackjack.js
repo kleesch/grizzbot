@@ -17,9 +17,9 @@ exports.command = async function (message, args, temptotals, exp) {
         return message.reply("You already have an ongoing game!");
     if (!(args.length == 1))
         return message.reply("Invalid bet!");
-    if (isNaN(args[0]))
+    if (isNaN(parseInt(args[0])))
         return message.reply("Invalid bet!");
-    var bet = parseInt(args[0]);
+    var bet = Math.floor(parseInt(args[0]));
     if (temptotals[message.author.id] < bet)
         return message.reply("You don't have enough to make that bet!");
     if (bet <= 0)
