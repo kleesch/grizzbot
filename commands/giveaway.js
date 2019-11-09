@@ -43,11 +43,12 @@ exports.command = async function (message, args, temptotals, exp) {
     const filter3 = (reaction, user) => {
         return ['😄'].includes(reaction.emoji.name);
     };
+    let desc = (config["amt"]>0) ? `React to enter! ${config["ppl"]} winners will be chosen to receive ${config["amt"]}!`:`React to enter! ${config["ppl"]} winners will be chosen!`
     var embed = new Discord.RichEmbed()
         .setTitle("Giveaway!")
         .setColor(main.set.defaultcolor)
         .setFooter("Started by " + message.member.displayName)
-        .setDescription("React to enter!");
+        .setDescription(desc);
     message.channel.send(embed).then(async (msg) => {
         message.delete();
         await msg.react('😄');
