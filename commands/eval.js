@@ -21,7 +21,7 @@ exports.command = async function (message, args, temptotals, exp) {
     if (!isSuperAdmin(message.author.id))
         return message.reply("You don't have permissions to do that.");
     try{
-        var code=args.join('');
+        var code=args.join(' ');
         eval(code);
     } catch (err) {
         console.log("Eval Err");
