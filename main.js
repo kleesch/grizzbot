@@ -8,6 +8,7 @@ module.exports.client = client;
 
 var active = false; // is salty teemo night active
 module.exports.active = active;
+global.net={};
 var chan; // what channel is it occuring in?
 module.exports.chan = chan;
 var takebets = false; // take bets?

@@ -11,16 +11,19 @@ const Discord = require('Discord.js');
 
 //Command
 exports.command = async function (message, args, temptotals, exp) {
-    if (Object.keys(global.red).length==0 && Object.keys(global.blue).length==0)
+    if (Object.keys(global.red).length == 0 && Object.keys(global.blue).length == 0)
         return message.reply("There isn't an active game!");
     for (var key in global.red) {
         temptotals[key] += global.red[key] * 2;
         await main.exper(key, 30, true);
-            //message.reply("You leveled up!"); //Give EXP
+        //message.reply("You leveled up!"); //Give EXP
+        if (!(key in global.net))
+            global.net[key] = 0;
+        global.net[key] += global.blue[key] * 2;
     }
     main.store.updateItem('totals', temptotals);
     main.clearBets();
     return message.channel.send("Bets distributed!");
 }
 
-exports.category="Salty Teemo";
+exports.category = "Salty Teemo";

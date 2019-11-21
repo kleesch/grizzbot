@@ -29,6 +29,9 @@ exports.command = function (message, args, temptotals, exp) {
             return message.reply("Bet too large.");
         global.blue[message.author.id] = bet;
         main.awardCash(message.author.id, -1 * bet);
+        if(!(message.author.id in global.net))
+            global.net[message.author.id]=0;
+        global.net[message.author.id]-=bet;
         return message.reply("Bet set for " + bet + " on blue!");
     }
 }
