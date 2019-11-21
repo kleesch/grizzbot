@@ -53,7 +53,7 @@ exports.command = async function (message, args, temptotals, exp) {
                 }
                 if (won) {
                     embed.setDescription("Number 1: **" + first + "**\nNumber 2: **" + second + "**\n\nYou guessed correctly! Congratulations!");
-                    await main.awardCash(message.author.id, Math.floor(1.25 * bet));
+                    await main.awardCash(message.author.id, Math.floor(1.5 * bet));
                 } else {
                     embed.setDescription("Number 1: **" + first + "**\nNumber 2: **" + second + "**\n\nYou guessed incorrectly.");
                 }
