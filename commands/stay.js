@@ -22,7 +22,7 @@ exports.command = async function (message, args, temptotals, exp) {
             if (main.blackjack[id][0] > 21) {
                 var embed = main.getBJEmbedFinal(id)
                 embed.addField("Dealer Bust!", "You won!");
-                main.awardCash(id, Math.floor(main.blackjack[id][3] * 1.5));
+                main.awardCash(id, Math.floor(main.blackjack[id][3] * 2));
                 delete main.blackjack[id];
                 return message.channel.send(embed);
             }
