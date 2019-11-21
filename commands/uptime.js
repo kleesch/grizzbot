@@ -13,6 +13,7 @@ const Discord = require('Discord.js');
 exports.command = async function (message, args, temptotals, exp) {
     var totalSeconds = Math.floor((main.client.uptime / 1000));
     var days = Math.floor(totalSeconds / 86400);
+    totalSeconds %=86400;
     var hours = Math.floor(totalSeconds / 3600);
     totalSeconds %= 3600;
     var minutes = Math.floor(totalSeconds / 60);
