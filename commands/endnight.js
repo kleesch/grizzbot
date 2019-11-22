@@ -17,7 +17,10 @@ exports.command = async function (message, args, temptotals, exp) {
     main.takebets = false;
     main.red = {};
     main.blue = {};
-    return message.channel.send("Salty teemo night is over!");
+    let emb = new Discord.RichEmbed()
+            .setColor(main.set.defaultcolor)
+            .setTitle("**Salty teemo night is over!**");
+    return message.channel.send(emb);
 }
 
 exports.category="Salty Teemo";

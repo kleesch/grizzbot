@@ -17,7 +17,7 @@ exports.command = function (message, args, temptotals, exp) {
         return message.reply("Bets are already closed!");
     main.takebets = false;
     let emb = new Discord.RichEmbed()
-            .setColor(set.defaultcolor)
+            .setColor(main.set.defaultcolor)
             .setTitle("**Betting is now closed!**");
     return message.channel.send(emb);
 }

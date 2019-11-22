@@ -17,7 +17,7 @@ exports.command = function (message, args, temptotals, exp) {
         return message.reply("Bets are already open!");
     main.takebets = true;
     let emb = new Discord.RichEmbed()
-            .setColor(set.defaultcolor)
+            .setColor(main.set.defaultcolor)
             .setTitle("**Betting is now open!**");
     return message.channel.send(emb);
 }

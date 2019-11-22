@@ -24,7 +24,7 @@ exports.command = async function (message, args, temptotals, exp) {
     main.store.updateItem('totals', temptotals);
     main.clearBets();
     let emb = new Discord.RichEmbed()
-            .setColor(set.defaultcolor)
+            .setColor(main.set.defaultcolor)
             .setTitle("**Bets distributed!**");
     return message.channel.send(emb);
 }

@@ -18,7 +18,7 @@ exports.command = function (message, args, temptotals, exp) {
         main.active = true;
         main.chan = message.channel;
         let emb = new Discord.RichEmbed()
-            .setColor(set.defaultcolor)
+            .setColor(main.set.defaultcolor)
             .setTitle("**Salty teemo night started!**");
         return message.channel.send(emb);
     } else {
