@@ -1,5 +1,5 @@
 //Settings
-exports.alias = ["resetteemo"]; //Commands equivalents
+exports.alias = ["resetcash"]; //Commands equivalents
 
 exports.isAdmin = true; //Must be admin to use?
 
