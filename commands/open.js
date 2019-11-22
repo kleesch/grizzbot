@@ -16,7 +16,10 @@ exports.command = function (message, args, temptotals, exp) {
     if (main.takebets)
         return message.reply("Bets are already open!");
     main.takebets = true;
-    return message.channel.send("**Betting is now open!**");
+    let emb = new Discord.RichEmbed()
+            .setColor(set.defaultcolor)
+            .setTitle("**Betting is now open!**");
+    return message.channel.send(emb);
 }
 
 exports.category="Salty Teemo";
