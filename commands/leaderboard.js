@@ -18,7 +18,7 @@ exports.command = async function (message, args, temptotals, exp) {
     for (var i = 0; i < sorted.length && i < 25; i++) {
         var b = sorted[i][0];
         const user = await main.client.fetchUser(b);
-        if (!user.bot)
+        if (!user.bot && message.channel.guild.member(user))
             str += ("**" + (i + 1) + ":** " + message.channel.guild.member(user).displayName + ": " + temptotals[b] + "\n");
     }
     var embed = new Discord.RichEmbed()
