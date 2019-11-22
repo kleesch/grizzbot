@@ -3,7 +3,7 @@ exports.alias = ["teemoboard", "tb"]; //Commands equivalents
 
 exports.isAdmin = false; //Must be admin to use?
 
-exports.helpText = "Tells you the current standings of users for the current salty teemo night.";
+exports.helpText = "Tells you the standings of users for salty teemo night.";
 
 //Requirements
 var main = require('../main.js');

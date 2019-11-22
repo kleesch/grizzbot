@@ -8,7 +8,7 @@ module.exports.client = client;
 
 var active = false; // is salty teemo night active
 module.exports.active = active;
-global.net={};
+global.net = {};
 var chan; // what channel is it occuring in?
 module.exports.chan = chan;
 var takebets = false; // take bets?
@@ -210,7 +210,7 @@ async function randomDrop(channel) {
 //Blackjack manager
 var blackjack = {} //[id]=[pcamt,pcstay,useramt,userbet,userdisplayname]
 module.exports.blackjack = blackjack;
-global.cooldowns={};
+global.cooldowns = {};
 function riskAssess(amt) {//This is the mathematical function to determine if the computer should hit or stay.
     return .1 * (-amt - 10) + 2; //can be negative. if negative, safe to bet
 }
@@ -219,7 +219,7 @@ module.exports.riskAssess = riskAssess;
 function getBJEmbed(id) {
     var embed = new Discord.RichEmbed()
         .setTitle("Blackjack with " + blackjack[id][4])
-        .setDescription("Dealer First Card: "+blackjack[id][0]+"\n\nYour Amount: " + blackjack[id][2])
+        .setDescription("Dealer First Card: " + blackjack[id][0] + "\n\nYour Amount: " + blackjack[id][2])
         .setColor(set.defaultcolor);
     return embed;
 }
@@ -290,6 +290,8 @@ function indexCommands() {
             }
             adminHelp.addField(`${cat} Commands`, cmdstr, true);
             adminHelp.addField("Descriptions", descstr, true);
+            if (!(cat =="Salty Teemo"))
+                adminHelp.addBlankField();
         }
     }
 
@@ -307,6 +309,8 @@ function indexCommands() {
             }
             regHelp.addField(`${cat} Commands`, cmdstr, true);
             regHelp.addField("Descriptions", descstr, true);
+            if (!(cat=="Salty Teemo"))
+                regHelp.addBlankField();
         }
     }
 }

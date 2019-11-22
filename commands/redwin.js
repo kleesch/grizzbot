@@ -3,7 +3,7 @@ exports.alias = ["redwin"]; //Commands equivalents
 
 exports.isAdmin = true; //Must be admin to use?
 
-exports.helpText = "Awards bets to respective winners and resets all betting.";
+exports.helpText = "Awards bets to winners and resets all betting.";
 
 //Requirements
 var main = require('../main.js');
