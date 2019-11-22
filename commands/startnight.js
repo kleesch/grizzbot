@@ -17,7 +17,10 @@ exports.command = function (message, args, temptotals, exp) {
     if (!main.active) {
         main.active = true;
         main.chan = message.channel;
-        return message.channel.send("Salty teemo night started!");
+        let emb = new Discord.RichEmbed()
+            .setColor(set.defaultcolor)
+            .setTitle("**Salty teemo night started!**");
+        return message.channel.send(emb);
     } else {
         return message.reply("Night already started");
     }
