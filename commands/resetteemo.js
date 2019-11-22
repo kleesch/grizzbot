@@ -12,8 +12,11 @@ const Discord = require('Discord.js');
 
 //Command
 exports.command = function (message, args, temptotals, exp) {
-    global.net={};
-    return;
+    global.net = {};
+    var emb = new Discord.RichEmbed()
+        .setColor(config.defaultcolor)
+        .setTitle("**Teemo Leaderboard Reset**");
+    return message.reply(emb);
 }
 
-exports.category="Salty Teemo";
+exports.category = "Salty Teemo";
