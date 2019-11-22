@@ -11,6 +11,12 @@ const Discord = require('Discord.js');
 
 //Command
 exports.command = async function (message, args, temptotals, exp) {
+    if (Object.keys(global.net).length == 0) {
+        let emb = new Discord.RichEmbed()
+            .setColor(set.defaultcolor)
+            .setTitle("**No Changes**");
+        message.reply(emb);
+    }
     var str = "";
     var sorted = main.sortBets(global.net);
     for (var i = 0; i < sorted.length && i < 25; i++) {
@@ -27,4 +33,4 @@ exports.command = async function (message, args, temptotals, exp) {
     return message.channel.send(embed);
 }
 
-exports.category="Misc";
+exports.category = "Salty Teemo";
