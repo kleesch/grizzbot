@@ -13,9 +13,9 @@ const Discord = require('Discord.js');
 exports.command = async function (message, args, temptotals, exp) {
     if (Object.keys(global.net).length == 0) {
         let emb = new Discord.RichEmbed()
-            .setColor(set.defaultcolor)
+            .setColor(main.set.defaultcolor)
             .setTitle("**No Changes**");
-        message.reply(emb);
+        return message.channel.send(emb);
     }
     var str = "";
     var sorted = main.sortBets(global.net);
