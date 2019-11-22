@@ -23,7 +23,10 @@ exports.command = async function (message, args, temptotals, exp) {
     }
     main.store.updateItem('totals', temptotals);
     main.clearBets();
-    return message.channel.send("Bets distributed!");
+    let emb = new Discord.RichEmbed()
+            .setColor(set.defaultcolor)
+            .setTitle("**Bets distributed!**");
+    return message.channel.send(emb);
 }
 
 exports.category = "Salty Teemo";
