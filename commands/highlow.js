@@ -15,17 +15,19 @@ const Discord = require('Discord.js');
 exports.command = async function (message, args, temptotals, exp) {
     if (isNaN(parseInt(args[0])))
         return message.reply("Invalid Amount");
-    var bet = Math.floor(parseInt(args[0]));
+    var bet = Math.abs(Math.floor(parseInt(args[0])));
     if (bet <= 0)
         return message.reply("Invalid Amount");
-    if (bet * 2 > Number.MAX_SAFE_INTEGER || bet>main.set.maxbet)
+    if (bet * 2 > Number.MAX_SAFE_INTEGER || bet > main.set.maxbet)
         return message.reply("Bet too big.");
+    if (temptotals[message.author.id] < bet)
+        return message.reply("You don't have enough to make that bet!");
     if (!(message.author.id in global.cooldowns))
         global.cooldowns[message.author.id] = new Date(2000);
     var long = Math.abs(((new Date()).getTime() - (new Date(global.cooldowns[message.author.id])).getTime()));
-    if (long/60000 < 1)
+    if (long / 60000 < 1)
         return message.reply("You can't make another bet yet!");
-    global.cooldowns[message.author.id]=new Date();
+    global.cooldowns[message.author.id] = new Date();
     main.awardCash(message.author.id, -1 * bet);
     const filter2 = (reaction, user) => {
         return ['👍', '👎'].includes(reaction.emoji.name) && user.id === message.author.id;
