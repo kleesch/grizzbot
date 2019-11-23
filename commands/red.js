@@ -19,7 +19,7 @@ exports.command = function (message, args, temptotals, exp) {
         return message.reply("Betting is closed!");
     else if (isNaN(args[0])) // Is not a number
         return message.reply("Invalid Amount");
-    else if (args[0] > temptotals[message.author.id])
+    else if (Math.abs(args[0]) > temptotals[message.author.id])
         return message.reply("You don't have enough to make that bet!");
     else if (main.hasBet(message.author.id))
         return message.reply("You have already bet!");
