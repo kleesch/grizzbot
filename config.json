@@ -13,12 +13,12 @@
     "defaultcolor": "#1c86ff",
     "daily": 500,
     "randomreward": 2000,
-    "maxgive": 10000,
+    "maxgive": 1000000,
     "helpexemptions": [
         "resetcash",
         "setcash",
         "help",
         "eval"
     ],
-    "maxbet": 5000
+    "maxbet": 100000
 }
